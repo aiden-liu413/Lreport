@@ -3,13 +3,13 @@
   <artifactId>ureport2-font</artifactId>
 	<version>2.3.1</version>
   <parent>
-  	<groupId>com.dsmp.ureport</groupId>
+  	<groupId>com.kxingyi.ureport</groupId>
   	<artifactId>ureport2-parent</artifactId>
   	<version>2.0.6</version>
   </parent>
   <dependencies>
   	<dependency>
-  		<groupId>com.dsmp.ureport</groupId>
+  		<groupId>com.kxingyi.ureport</groupId>
   		<artifactId>ureport2-core</artifactId>
   		<version>2.3.1</version>
   	</dependency>
