@@ -1,7 +1,7 @@
 package com.dsmp.report.aop;
 
 import com.bstek.ureport.exception.ReportException;
-import com.dsmp.common.exception.BusinessException;
+import com.kxingyi.common.exception.BusinessException;
 import com.dsmp.report.common.domain.ReportTemplte;
 import com.dsmp.report.common.log.Looger;
 import com.dsmp.report.web.service.IReportTemplteService;

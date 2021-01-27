@@ -1,9 +1,9 @@
 package com.dsmp.report.config.feign;
 
-import com.dsmp.common.exception.BusinessException;
-import com.dsmp.common.service.BaseService;
-import com.dsmp.common.util.feign.DefaultFeignClientConfiguration;
-import com.dsmp.common.util.okhttp.OkHttpBuilderProvider;
+import com.kxingyi.common.exception.BusinessException;
+import com.kxingyi.common.service.BaseService;
+import com.kxingyi.common.util.feign.DefaultFeignClientConfiguration;
+import com.kxingyi.common.util.okhttp.OkHttpBuilderProvider;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Client;

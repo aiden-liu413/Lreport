@@ -1,6 +1,6 @@
 package com.dsmp.report.transfer;
 
-import com.dsmp.common.util.feign.FeignClient;
+import com.kxingyi.common.util.feign.FeignClient;
 import com.dsmp.report.common.vo.LogHighRiskIpSVo;
 import com.dsmp.report.common.vo.LogStatisticsVo;
 import com.dsmp.report.config.feign.DataSyncFeignConfig;

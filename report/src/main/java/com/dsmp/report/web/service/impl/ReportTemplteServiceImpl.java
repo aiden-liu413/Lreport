@@ -1,7 +1,7 @@
 package com.dsmp.report.web.service.impl;
 
-import com.dsmp.common.exception.BusinessException;
-import com.dsmp.common.util.UUIDTool;
+import com.kxingyi.common.exception.BusinessException;
+import com.kxingyi.common.util.UUIDTool;
 import com.dsmp.report.aop.AppendUserId;
 import com.dsmp.report.common.bo.ReportTemplteBo;
 import com.dsmp.report.common.domain.ReportTemplte;

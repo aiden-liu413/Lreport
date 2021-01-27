@@ -1,7 +1,7 @@
 package com.dsmp.report.provider;
 
 import com.bstek.ureport.console.html.ITaskParamProvider;
-import com.dsmp.common.util.JsonUtils;
+import com.kxingyi.common.util.JsonUtils;
 import com.dsmp.report.common.domain.ReportTask;
 import com.dsmp.report.web.repository.ReportTaskRepository;
 import com.google.common.collect.Maps;

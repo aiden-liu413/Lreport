@@ -1,6 +1,6 @@
 package com.dsmp.report.config;
 
-import com.dsmp.common.exception.handler.GlobalExceptionHandler;
+import com.kxingyi.common.exception.handler.GlobalExceptionHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;

@@ -1,7 +1,7 @@
 package com.dsmp.report.task;
 
-import com.dsmp.common.exception.BusinessException;
-import com.dsmp.common.util.JsonUtils;
+import com.kxingyi.common.exception.BusinessException;
+import com.kxingyi.common.util.JsonUtils;
 import com.dsmp.report.common.bo.ReportTaskBo;
 import com.dsmp.report.common.domain.ReportTask;
 import com.dsmp.report.common.domain.ReportTemplte;

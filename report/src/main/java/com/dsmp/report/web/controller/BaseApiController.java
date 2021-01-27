@@ -1,8 +1,8 @@
 package com.dsmp.report.web.controller;
 
-import com.dsmp.common.exception.BusinessException;
-import com.dsmp.common.web.response.MsgResult;
-import com.dsmp.common.web.response.UnifyApiCode;
+import com.kxingyi.common.exception.BusinessException;
+import com.kxingyi.common.web.response.MsgResult;
+import com.kxingyi.common.web.response.UnifyApiCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

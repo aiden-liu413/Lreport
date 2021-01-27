@@ -1,6 +1,6 @@
 package com.dsmp.report.web.service.impl;
 
-import com.dsmp.common.util.security.CryptUtil;
+import com.kxingyi.common.util.security.CryptUtil;
 import com.dsmp.report.common.bo.EmailBo;
 import com.dsmp.report.common.domain.SysParam;
 import com.dsmp.report.web.repository.SysParamRepository;

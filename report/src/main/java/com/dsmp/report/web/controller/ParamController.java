@@ -1,7 +1,7 @@
 package com.dsmp.report.web.controller;
 
-import com.dsmp.common.exception.BusinessException;
-import com.dsmp.common.web.response.MsgResult;
+import com.kxingyi.common.exception.BusinessException;
+import com.kxingyi.common.web.response.MsgResult;
 import com.dsmp.report.web.service.IReportParamService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

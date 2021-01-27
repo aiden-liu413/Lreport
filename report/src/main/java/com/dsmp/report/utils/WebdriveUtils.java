@@ -1,6 +1,6 @@
 package com.dsmp.report.utils;
 
-import com.dsmp.common.util.JsonUtils;
+import com.kxingyi.common.util.JsonUtils;
 import com.dsmp.report.common.domain.ReportTask;
 import com.dsmp.report.common.domain.ReportTaskParam;
 import com.dsmp.report.common.enums.CycleEnum;

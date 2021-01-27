@@ -1,7 +1,7 @@
 package com.dsmp.report.web.service.impl;
 
-import com.dsmp.common.exception.BusinessException;
-import com.dsmp.common.util.minio.MinIoComponent;
+import com.kxingyi.common.exception.BusinessException;
+import com.kxingyi.common.util.minio.MinIoComponent;
 import com.dsmp.report.common.domain.ReportFile;
 import com.dsmp.report.common.enums.ReportEnum;
 import com.dsmp.report.common.vo.ReportFileVo;

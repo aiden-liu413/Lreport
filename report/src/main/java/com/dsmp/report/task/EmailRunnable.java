@@ -1,6 +1,6 @@
 package com.dsmp.report.task;
 
-import com.dsmp.common.util.minio.MinIoComponent;
+import com.kxingyi.common.util.minio.MinIoComponent;
 import com.dsmp.report.common.bo.EmailBo;
 import com.dsmp.report.common.domain.ReportFile;
 import com.dsmp.report.common.enums.ReportEnum;

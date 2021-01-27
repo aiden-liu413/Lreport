@@ -1,6 +1,6 @@
 package com.dsmp.report.web.request;
 
-import com.dsmp.common.web.request.Pagination;
+import com.kxingyi.common.web.request.Pagination;
 import com.dsmp.report.common.enums.EntityStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

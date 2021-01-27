@@ -1,8 +1,8 @@
 package com.dsmp.report;
 
 import com.bstek.ureport.export.ExportManager;
-import com.dsmp.common.util.elasticsearch.ElasticsearchUtil;
-import com.dsmp.common.util.elasticsearch.IndexName;
+import com.kxingyi.common.util.elasticsearch.ElasticsearchUtil;
+import com.kxingyi.common.util.elasticsearch.IndexName;
 import com.dsmp.report.common.bo.ReportTaskBo;
 import com.dsmp.report.common.domain.ReportTask;
 import com.dsmp.report.common.domain.ReportTaskParam;

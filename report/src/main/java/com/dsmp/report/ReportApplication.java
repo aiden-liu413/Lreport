@@ -1,7 +1,7 @@
 package com.dsmp.report;
 
-import com.dsmp.common.util.feign.EnableFeignClient;
-import com.dsmp.common.util.minio.EnableMinio;
+import com.kxingyi.common.util.feign.EnableFeignClient;
+import com.kxingyi.common.util.minio.EnableMinio;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableMinio
 @EnableJpaAuditing
 @EnableFeignClient
+@NacosPropertySource(dataId = "report", autoRefreshed = true)
 public class ReportApplication {
 
     public static void main(String[] args) {

@@ -1,7 +1,7 @@
 package com.dsmp.report.web.controller;
 
-import com.dsmp.common.web.response.MsgResult;
-import com.dsmp.common.web.response.UnifyApiCode;
+import com.kxingyi.common.web.response.MsgResult;
+import com.kxingyi.common.web.response.UnifyApiCode;
 import com.dsmp.report.common.bo.ReportTemplteBo;
 import com.dsmp.report.common.domain.ReportTemplte;
 import com.dsmp.report.web.request.ReportTempltePagination;
