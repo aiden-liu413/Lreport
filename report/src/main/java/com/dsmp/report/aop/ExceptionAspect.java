@@ -1,10 +1,11 @@
 package com.dsmp.report.aop;
 
 import com.bstek.ureport.exception.ReportException;
-import com.kxingyi.common.exception.BusinessException;
 import com.dsmp.report.common.domain.ReportTemplte;
+import com.dsmp.report.common.exception.TaskExecException;
 import com.dsmp.report.common.log.Looger;
 import com.dsmp.report.web.service.IReportTemplteService;
+import com.kxingyi.common.exception.BusinessException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -31,12 +32,27 @@ public class ExceptionAspect extends Looger {
         try {
             return joinPoint.proceed();
         } catch (Exception e) {
-            if(e instanceof BusinessException){
+            if (e instanceof BusinessException) {
                 logger.info(e.getMessage());
                 throw e;
-            }else{
+            } else {
                 logger.info(e.getMessage(), e);
                 throw new ReportException("报表系统发生未知错误,请联系管理员！");
+            }
+        }
+    }
+
+    @Around("@annotation(com.dsmp.report.aop.LogReportTaskDetail)")
+    public Object LogReportTaskDetail(ProceedingJoinPoint joinPoint) throws Throwable {
+        try {
+            return joinPoint.proceed();
+        } catch (Exception e) {
+            if (e instanceof TaskExecException) {
+                // TODO 加上任务执行失败日志
+
+                return null;
+            } else {
+                throw new ReportException("内部错误");
             }
         }
     }
@@ -45,7 +61,7 @@ public class ExceptionAspect extends Looger {
     public void addAfterReturning(ProceedingJoinPoint joinPoint) {
         try {
             Object res = joinPoint.proceed();
-            if(!(null == extendJsonProvider)){
+            if (!(null == extendJsonProvider)) {
                 ReportTemplte reportTemplte = (ReportTemplte) res;
                 String currentUserId = extendJsonProvider.getExtendJson();
                 IReportTemplteService.setExtendJson(extendJsonProvider.getExtendJson(), reportTemplte);

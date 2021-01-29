@@ -23,10 +23,8 @@ public class ReportParamServiceImpl implements IReportParamService {
         if(null == fileCacheDays){
             fileCacheDays = new SysParam();
             fileCacheDays.setKey(FILE_CACHE_DAYS);
-            fileCacheDays.setValue(cacheDays+"");
-        }else{
-            fileCacheDays.setValue(cacheDays+"");
         }
+        fileCacheDays.setValue(cacheDays+"");
         paramRepository.save(fileCacheDays);
     }
 
@@ -36,7 +34,7 @@ public class ReportParamServiceImpl implements IReportParamService {
         if(null == fileCacheDays){
             return 30;
         }
-        return Integer.valueOf(fileCacheDays.getValue());
+        return Integer.parseInt(fileCacheDays.getValue());
     }
 
     @Override
