@@ -1,5 +1,6 @@
 package com.dsmp.report;
 
+import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;
 import com.kxingyi.common.util.feign.EnableFeignClient;
 import com.kxingyi.common.util.minio.EnableMinio;
 import org.springframework.boot.SpringApplication;

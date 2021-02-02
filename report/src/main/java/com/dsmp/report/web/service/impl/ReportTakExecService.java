@@ -2,6 +2,7 @@ package com.dsmp.report.web.service.impl;
 
 import com.dsmp.report.common.domain.ReportTaskExec;
 import com.dsmp.report.common.domain.ReportTaskExecR;
+import com.dsmp.report.common.enums.ExecStatus;
 import com.dsmp.report.common.exception.TaskExecException;
 import com.dsmp.report.common.vo.ReportTaskExecVo;
 import com.dsmp.report.web.repository.ReportTaskExecRRepository;
@@ -38,6 +39,7 @@ public class ReportTakExecService implements IReportExecService {
     @Override
     public void logTaskExecFailDetail(TaskExecException execException) {
         ReportTaskExec exec = new ReportTaskExec(execException.getMessage(), null);
+        exec.setExecStatus(ExecStatus.FAILED);
         String execId = reportTaskExecRepository.save(exec).getId();
         reportTaskExecRRepository.save(new ReportTaskExecR(execException.getTaskId(), execException.getTemplteId(), execId));
     }

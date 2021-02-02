@@ -1,7 +1,6 @@
 package com.dsmp.report.common.domain;
 
 import com.dsmp.report.common.enums.ExecStatus;
-import io.swagger.annotations.ApiModel;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -28,6 +27,7 @@ public class ReportTaskExec implements Serializable, Cloneable {
     /**
      * 执行状态
      */
+    @Enumerated(EnumType.STRING)
     private ExecStatus execStatus = ExecStatus.SUCCESS;
     /**
      * 执行日志

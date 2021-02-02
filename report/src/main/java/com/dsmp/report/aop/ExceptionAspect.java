@@ -14,8 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * @author byliu
- * 针对模板的增删改查操作的环绕切面
+ * @author byliu 针对模板的增删改查操作的环绕切面
  **/
 @Aspect
 @Component
@@ -44,15 +43,15 @@ public class ExceptionAspect extends Looger {
             }
         }
     }
-    // TODO 切面在多线程失效 待研究解决
-    //@Around("@annotation(com.dsmp.report.aop.LogReportTaskDetail)")
+
+    @Around("@annotation(com.dsmp.report.aop.LogReportTaskDetail)")
     public Object logReportTaskDetail(ProceedingJoinPoint joinPoint) {
         try {
             return joinPoint.proceed();
         } catch (Throwable e) {
             if (e instanceof TaskExecException) {
                 // TODO 加上任务执行失败日志
-                execService.logTaskExecFailDetail((TaskExecException)e);
+                execService.logTaskExecFailDetail((TaskExecException) e);
                 return null;
             } else {
                 throw new ReportException("内部错误");
