@@ -102,7 +102,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.dsmp.ureport</groupId>
+            <groupId>com.kxingyi.ureport</groupId>
             <artifactId>ureport2-console</artifactId>
             <version>2.3.1</version>
         </dependency>

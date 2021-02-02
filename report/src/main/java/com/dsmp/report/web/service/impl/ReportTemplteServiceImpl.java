@@ -172,8 +172,7 @@ public class ReportTemplteServiceImpl implements IReportTemplteService {
     public Page<ReportTemplte> pages(ReportTempltePagination pagination) {
 
         PageRequest pageRequest = PageRequest.of(pagination.getPage(), pagination.getSize(), Sort.Direction.DESC, "createTime");
-        Page<ReportTemplte> reportFiles = reportRepository.listWithPage(pagination.getContent(), null, pagination.getStartTime(), pagination.getEndTime(), pageRequest);
-        return reportFiles;
+        return reportRepository.listWithPage(pagination.getContent(), null, pagination.getStartTime(), pagination.getEndTime(), pageRequest);
     }
 
     @Override
@@ -197,7 +196,7 @@ public class ReportTemplteServiceImpl implements IReportTemplteService {
         try (InputStreamReader inr = new InputStreamReader(file.getInputStream());
              BufferedReader bufferedReader = new BufferedReader(inr)) {
             StringBuilder content = new StringBuilder();
-            String line = "";
+            String line;
             while ((line = bufferedReader.readLine()) != null) {
                 content.append(line);
             }

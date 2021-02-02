@@ -43,10 +43,9 @@ public class ReportFileServiceImpl implements IReportFileService {
     public Page<ReportFileVo> pages(ReportFilePagination pagination) {
 
         PageRequest pageRequest = PageRequest.of(pagination.getPage(), pagination.getSize(), Sort.Direction.DESC, "createTime");
-        Page<ReportFileVo> reportFiles = reportFileRepository.listWithPage(pagination.getContent(), pagination.getTaskId(),
+        return reportFileRepository.listWithPage(pagination.getContent(), pagination.getTaskId(),
                 null, pagination.getTemplteId(), pagination.getStartTime(), pagination.getEndTime(), pagination.getContent(),
                 pagination.getContent(), pageRequest);
-        return reportFiles;
     }
 
     @Override
@@ -124,7 +123,7 @@ public class ReportFileServiceImpl implements IReportFileService {
         for (int i = 0; i < ins.size(); i++) {
             zou.putNextEntry((new ZipEntry(name + "." + suffixArr[i])));
             byte[] b = new byte[1024];
-            int length = 0;
+            int length;
             DataOutputStream os = new DataOutputStream(zou);
             while ((length = ins.get(i).read(b)) != -1) {
                 os.write(b, 0, length);

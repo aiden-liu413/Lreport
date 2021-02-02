@@ -3,6 +3,11 @@ package com.dsmp.report.task;
 import com.bstek.ureport.export.ExportConfigure;
 import com.bstek.ureport.export.ExportConfigureImpl;
 import com.bstek.ureport.export.ExportManager;
+import com.dsmp.report.aop.LogReportTaskDetail;
+import com.dsmp.report.common.exception.TaskExecException;
+import com.dsmp.report.common.exception.TaskRepeatException;
+import com.dsmp.report.web.service.IReportExecService;
+import com.kxingyi.common.exception.BusinessException;
 import com.kxingyi.common.util.JsonUtils;
 import com.kxingyi.common.util.UUIDTool;
 import com.kxingyi.common.util.minio.MinIoComponent;
@@ -22,6 +27,7 @@ import com.dsmp.report.web.repository.ReportRepository;
 import com.dsmp.report.web.repository.ReportTaskRepository;
 import com.dsmp.report.web.service.IReportParamService;
 import com.google.common.collect.Maps;
+import com.sun.javafx.binding.StringFormatter;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -59,18 +65,22 @@ public class SchedulingRunnable implements Runnable {
 
     @Override
     public void run() {
+        exec();
+    }
+    @LogReportTaskDetail
+    private void exec() {
         logger.info("定时任务开始执行 - task：{}", task);
         long startTime = System.currentTimeMillis();
+        IReportExecService execService = SpringContextUtils.getBean(IReportExecService.class);
+        ExportManager exportManager = SpringContextUtils.getBean(ExportManager.class);
+        ReportRepository reportRepository = SpringContextUtils.getBean(ReportRepository.class);
+        ReportFileRepository fileRepository = SpringContextUtils.getBean(ReportFileRepository.class);
+        ReportTaskRepository taskRepository = SpringContextUtils.getBean(ReportTaskRepository.class);
+        IReportParamService paramService = SpringContextUtils.getBean(IReportParamService.class);
+        ThreadPoolTaskExecutor threadPoolTaskExecutor = SpringContextUtils.getBean(ThreadPoolTaskExecutor.class);
         try {
-            ExportManager exportManager = SpringContextUtils.getBean(ExportManager.class);
-            ReportRepository reportRepository = SpringContextUtils.getBean(ReportRepository.class);
-            ReportFileRepository fileRepository = SpringContextUtils.getBean(ReportFileRepository.class);
-            ReportTaskRepository taskRepository = SpringContextUtils.getBean(ReportTaskRepository.class);
-            IReportParamService paramService = SpringContextUtils.getBean(IReportParamService.class);
-            ThreadPoolTaskExecutor threadPoolTaskExecutor = SpringContextUtils.getBean(ThreadPoolTaskExecutor.class);
-
             List<String> reportIds = Arrays.asList(task.getReportIds().split(","));
-            reportIds.forEach(reportId -> {
+            reportIds.forEach(reportId ->  {
 
                 Optional<ReportTemplte> report = reportRepository.findById(reportId);
                 ReportTemplte reportTemplte = report.orElseThrow(() -> new RuntimeException("can not find uReportFile"));
@@ -117,7 +127,7 @@ public class SchedulingRunnable implements Runnable {
                             // 上传文件
                             MinIoComponent.putObject(in, new Date(), file.getMappingName(), reportEnum.getSuffix());
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            throw new TaskExecException(task.getId(), reportId, String.format("报表文件:[%s] 生成失败:[%s]", reportEnum.getSuffix(), e.getMessage() ));
                         } finally {
                             IOUtils.closeQuietly(configure.getOutputStream());
                             IOUtils.closeQuietly(in);
@@ -127,11 +137,8 @@ public class SchedulingRunnable implements Runnable {
 
                 // 保存报表文件数据
                 fileRepository.save(file);
-                // 如果是自定义周期任务，在任务完成后将任务状态改为完成
-                if (CycleEnum.CUSTOM.equals(task.getCycleType())) {
-                    task.setStatus(EntityStatus.CLOSED);
-                    taskRepository.save(task);
-                }
+                // 记录执行情况
+                execService.logTaskExecSuccessDetail(task.getId(), reportId, (System.currentTimeMillis() - startTime)+"");
                 EmailBo emailParam = paramService.getEmailParam();
                 // 如果邮件相关参数正常  执行发送邮件
                 if (ValidatorUtils.validateEntity(emailParam).size() == 0) {
@@ -140,8 +147,16 @@ public class SchedulingRunnable implements Runnable {
                     threadPoolTaskExecutor.execute(new EmailRunnable(emailParam, file, recipients.toArray(new String[recipients.size()])));
                 }
             });
+            // 如果是自定义周期任务，在任务完成后将任务状态改为完成
+            if (CycleEnum.CUSTOM.equals(task.getCycleType())) {
+                task.setStatus(EntityStatus.CLOSED);
+                taskRepository.save(task);
+            }
         } catch (Exception ex) {
             logger.error(String.format("定时任务执行异常 - task：%s", task), ex);
+            TaskExecException taskExecException = new TaskExecException(task.getId(), null, String.format("任务执行失败:[%s]", ex.getMessage()));
+            execService.logTaskExecFailDetail(taskExecException);
+
         }
         long times = System.currentTimeMillis() - startTime;
         logger.info("定时任务执行结束 - task：{}，耗时：{} 毫秒", task, times);
@@ -149,8 +164,12 @@ public class SchedulingRunnable implements Runnable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         SchedulingRunnable that = (SchedulingRunnable) o;
         if (null == task.getParams()) {
             return task.getCycleType().equals(that.task.getCycleType()) &&
